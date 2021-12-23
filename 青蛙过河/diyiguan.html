@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>青蛙过河小游戏</title>
+    <script src="js/vue.js" type="text/javascript" charset="utf-8">
+	</script>
+	<script>
+	body{
+		background-color: lightgreen;
+	}
+	</script>
+</head>
+<body background="img/2.png">
+				<a id="anchor1"> </a>
+				<ul>
+					<li><a href="denglu.html">返回登录</a></li>
+				</ul>	
+<h1 align="center">青蛙过河</h1>
+<div id="app">
+	<div style="right">
+				<audio controls="controls" loop="loop">
+		    <source src="周杰伦%20-%20告白气球(1).mp3" type="audio/ogg">
+		</audio>
+		</div >
+ <button @click="show()" >点击开始游戏<tton>
+    请输入：<input type="text" @keyup="show()" v-model="userString"  />
+    <button @click="restart()">再来一次<tton>
+    分数<span>{{score}}</span>
+	步数<span>{{step}}</span>
+	<td>
+		<a href="dierguan.html"><input type="submit" value="下一关" /></a>
+	</td>
+</div>
+<canvas id="myCanvas" width="800" height="600"></canvas>
+<script type="text/javascript">
+    let v=new Vue({
+        el:"#app",
+        data:{
+            userString:"",
+            score:0,
+			step:0,
+            a:400,
+            b:400,
+            status:0
+        },
+        methods:{
+            show(){
+
+                // 加载背景
+                let canvas=document.getElementById("myCanvas");
+                let context= canvas.getContext("2d");
+                let img_background=new Image();
+                img_background.src="./img/background.gif";
+                img_background.onload=function(){
+                    context.drawImage(img_background,0,0);
+                };
+
+                // 显示青蛙
+                let img_frog=new Image();
+                img_frog.src="./img/frog.gif";
+                img_frog.onload=function(){
+                    context.drawImage(img_frog,400,400);
+                };
+
+                // 条件判断
+                if(this.userString==="hello" && this.status===0 ){
+                    this.score++;
+					this.step++;
+                    this.userString="";
+                    img_frog.onload=function(){
+                        context.drawImage(img_frog,250,260);
+                    };
+                    this.a=250;
+                    this.b=260;
+                    this.status++
+                }else if (this.userString==="world"&&this.status===1 ){
+                    this.score++;
+					this.step++;
+                    this.userString="";
+                    img_frog.onload=function () {
+                       context.drawImage(img_frog,450,150);
+                       };
+                    this.a=450;
+                    this.b=150;
+                    this.status++
+                }else if (this.userString==="hi"&&this.status===2 ){
+                    this.score++;
+					this.step++;
+                    this.userString="";
+                    img_frog.onload=function () {
+                        context.drawImage(img_frog,270,50);
+                        };
+                    this.a=270;
+                    this.b=50
+                }else {
+                    //获取上一次的位置
+                    let  x=this.a;
+                    let  y=this.b;
+                    img_frog.onload=function () {
+                        context.drawImage(img_frog,x,y)
+                    }
+                }
+
+            },
+            restart:function () {
+                this.status=0;
+                this.score=0;
+				this.step=0;
+                this.a=400;
+                this.b=400;
+                this.show()
+            }
+
+        },
+		
+    })
+	
+</script>
+<a href="#anchor1"><img src="img/t01daea4e264f1d939f.jpg" width="30px" height="30px" align="baseline"></a>
+</body>
+
